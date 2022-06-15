@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/104/three.min.js"></script>
-    <title>three.jsではじめての3D図形を描画しよう！</title>
+    <script src="https://unpkg.com/three@0.137.4/build/three.min.js"></script>
+    <title>three.jsで圧倒的デジタルツインコンピューティング</title>
     <style>
         * {
             margin: 0;
@@ -64,7 +64,7 @@
             scene.add(axes);
 
             //「球体」オブジェクトの作成
-            const geometry = new THREE.SphereGeometry(100, 32, 32); //形状（ジオメトリ）の作成
+            const geometry = new THREE.SphereGeometry(100, 16, 1); //形状（ジオメトリ）の作成
             const material = new THREE.MeshNormalMaterial();
             sphere = new THREE.Mesh(geometry, material); //オブジェクトの作成
             //シーンに追加
