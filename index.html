@@ -1,47 +1,84 @@
 
-window.addEventListener('DOMContentLoaded', init);
+<!DOCTYPE html>
+<html lang="ja">
 
-const width = 960;
-const height = 540;
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/104/three.min.js"></script>
+    <title>three.jsではじめての3D図形を描画しよう！</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        div#canvas-frame {
+            width: 500px;
+            height: 500px;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function(e) {
+            startThree();
+        }, false)
 
-function init() {
+        function startThree() {
+            initThree(); //レンダラー、シーン設定
+            initCamera(); //カメラ作成
+            initObject(); //3D図形作成
+            draw(); //描画
+        }
+        //グローバル変数の宣言
+        let scene,
+            canvasFrame, renderer, camera, sphere;
+        //レンダラー、シーンを設定
+        function initThree() {
+            canvasFrame = document.getElementById('canvas-frame'); //生成されるcanvas要素を配置するdiv要素
+            //レンダラーオブジェクトの作成
+            renderer = new THREE.WebGLRenderer({
+                antialias: true
+            });
+            //レンダラーの背景色
+            renderer.setClearColor(0x999999, 1.0);
+            //レンダラーのサイズ
+            renderer.setSize(canvasFrame.clientWidth, canvasFrame.clientHeight);
+            //レンダラーの解像度
+            renderer.setPixelRatio(window.devicePixelRatio);
+            if (!renderer) alert('初期化失敗！');
+            //レンダラーが生成するcanvasをdiv要素に配置
+            canvasFrame.appendChild(renderer.domElement);
+            //シーンオブジェクトを生成
+            scene = new THREE.Scene();
+        }
+        //カメラを設定
+        function initCamera() {
+            //カメラの作成
+            camera = new THREE.PerspectiveCamera(45, canvasFrame.clientWidth / canvasFrame.clientHeight);
+            camera.position.set(10, 50, 1000); //カメラの位置を指定
+        }
+        //描画する3D図形を作成
+        function initObject() {
+            //「軸」オブジェクトの作成
+            const axes = new THREE.AxesHelper(1000);
+            //シーンに追加
+            scene.add(axes);
 
-  const renderer = new THREE.WebGLRenderer({
-    canvas: document.querySelector('#myCanvas')
-  });
-  renderer.setSize(width, height);
+            //「球体」オブジェクトの作成
+            const geometry = new THREE.SphereGeometry(100, 32, 32); //形状（ジオメトリ）の作成
+            const material = new THREE.MeshNormalMaterial();
+            sphere = new THREE.Mesh(geometry, material); //オブジェクトの作成
+            //シーンに追加
+            scene.add(sphere);
+        }
 
+        function draw() {
+            renderer.render(scene, camera);
+        }
+    </script>
+</head>
 
+<body>
+    <div id="canvas-frame"></div>
+</body>
 
-  const scene = new THREE.Scene();
-
-
-  const camera = new THREE.PerspectiveCamera(45, width / height, 1, 10000);
-  camera.position.set(0, 0, +1000);
-
-
-  const geometry = new THREE.SphereGeometry(300, 30, 30);
-  const material = new THREE.MeshStandardMaterial({color: 0xFF0000});
-
-  const mesh = new THREE.Mesh(geometry, material);
-
-  scene.add(mesh);
-
-
-  const directionalLight = new THREE.DirectionalLight(0xFFFFFF);
-  directionalLight.position.set(1, 1, 1);
-
-  scene.add(directionalLight);
-
-  tick();
-
-
-  function tick() {
-
-    mesh.rotation.y += 0.01;
-
-    renderer.render(scene, camera);
-
-    requestAnimationFrame(tick);
-  }
-}
+</html>

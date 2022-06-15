@@ -1,0 +1,19 @@
+{
+  "name": "htmlar",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jellybeans511/HtmlAR.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jellybeans511/HtmlAR/issues"
+  },
+  "homepage": "https://github.com/jellybeans511/HtmlAR#readme"
+}
